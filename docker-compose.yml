@@ -1,0 +1,23 @@
+services:
+  geoserver:
+    image: kartoza/geoserver:2.26.1
+    container_name: geoserver
+    ports:
+      - "9090:8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      GEOSERVER_ADMIN_USER: ${GEOSERVER_ADMIN_USER}
+      GEOSERVER_ADMIN_PASSWORD: ${GEOSERVER_ADMIN_PASSWORD}
+      CORS_ENABLED: "true"
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
+      HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASS: ${POSTGRES_PASS}
+    volumes:
+      - geoserver_data:/opt/geoserver/data_dir
+
+volumes:
+  geoserver_data:
